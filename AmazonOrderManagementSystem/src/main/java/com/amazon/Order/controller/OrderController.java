@@ -10,22 +10,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.amazon.Order.dto.CreateOrderRquest;
 import com.amazon.Order.dto.OrderResponse;
-import com.amazon.Order.dto.ProductRequest;
-import com.amazon.Order.dto.ProductResponse;
 import com.amazon.Order.entity.Order;
 import com.amazon.Order.service.OrderService;
-import com.amazon.Order.service.ProductService;
 
 @RestController
 @RequestMapping("/order")
 public class OrderController {
 
 	private final OrderService orderService;
-	private final ProductService productService;
 
-	public OrderController(OrderService orderService, ProductService productService) {
+	public OrderController(OrderService orderService) {
 		this.orderService = orderService;
-		this.productService = productService;
 	}
 
 	@PostMapping("/createOrder")
@@ -40,8 +35,4 @@ public class OrderController {
 		return orderService.getOrders();
 	}
 
-	@PostMapping("/insertProduct")
-	public ProductResponse InsertProduct(@RequestBody ProductRequest request) {
-		return productService.insertProduct(request);
-	}
 }
