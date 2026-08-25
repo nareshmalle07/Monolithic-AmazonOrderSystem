@@ -136,12 +136,12 @@ public class OrderService {
         if (!"SUCCESS".equals(paymentResponse.getStatus())) {
             throw new RuntimeException("Hey Naresh, Payment Failed ");
         } else {
-            orderStateMachine.transition(savedOrder, OrderStatus.PAYMENT_COMPLETED);
+//            orderStateMachine.transition(savedOrder, OrderStatus.PAYMENT_COMPLETED);
         }
 
         ShipmentRequest shipmentRequest = new ShipmentRequest();
         shipmentRequest.setOrderId(savedOrder.getId());
-        orderStateMachine.transition(savedOrder, OrderStatus.PRODUCT_SHIPPED);
+//        orderStateMachine.transition(savedOrder, OrderStatus.PRODUCT_SHIPPED);
 
         orderRepository.save(order);
 
