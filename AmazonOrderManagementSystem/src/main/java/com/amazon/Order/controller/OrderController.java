@@ -2,6 +2,7 @@ package com.amazon.Order.controller;
 
 import java.util.List;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +25,10 @@ public class OrderController {
 	}
 
 	@PostMapping("/createOrder")
-	public OrderResponse CreateOrder(@RequestBody CreateOrderRquest request) {
+	public OrderResponse CreateOrder(@RequestBody CreateOrderRquest request, HttpServletRequest httpServletRequest) {
+
+		String CorrelationId=httpServletRequest.getHeader("X-Correlation-ID");
+		System.out.println("Inside order Controller - CorrelationId is "+CorrelationId);
 
 		System.out.println("Inside order Controller - createOrder");
 		return orderService.createOrder(request);
