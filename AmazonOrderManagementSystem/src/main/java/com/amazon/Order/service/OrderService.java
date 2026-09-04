@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.amazon.Order.client.ProductFeignClient;
 import com.amazon.Order.dto.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import com.amazon.Order.Exception.InvalidQuantityException;
@@ -20,6 +21,7 @@ import com.amazon.Order.repository.OrderRepository;
 
 import jakarta.transaction.Transactional;
 
+@Slf4j
 @Service
 public class OrderService {
 
@@ -31,6 +33,8 @@ public class OrderService {
     private final ShipmentService shipmentService;
     private final NotificationService notificationService;
     private final ProductFeignClient productFeignClient;
+
+
 
     public OrderService(OrderRepository orderRepository,
                          PricingService pricingService, PaymentService paymentService,
@@ -86,6 +90,9 @@ public class OrderService {
 
             System.out.println("Inside Order-Service " + order.getOrderStatus());
             orderStateMachine.transition(order, OrderStatus.INVENTORY_RESERVED);
+            log.info("Creating order - Trace ID: {}, Span ID: {}",
+                    io.opentelemetry.api.trace.Span.current().getSpanContext().getTraceId(),
+                    io.opentelemetry.api.trace.Span.current().getSpanContext().getSpanId());
 
             BigDecimal TotalPrice = product.getPrice().multiply(BigDecimal.valueOf(item.getQuantity()));
             totalAmount = totalAmount.add(TotalPrice);
