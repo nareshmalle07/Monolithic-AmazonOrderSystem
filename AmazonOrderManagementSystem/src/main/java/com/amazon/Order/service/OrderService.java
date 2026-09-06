@@ -90,9 +90,7 @@ public class OrderService {
 
             System.out.println("Inside Order-Service " + order.getOrderStatus());
             orderStateMachine.transition(order, OrderStatus.INVENTORY_RESERVED);
-            log.info("Creating order - Trace ID: {}, Span ID: {}",
-                    io.opentelemetry.api.trace.Span.current().getSpanContext().getTraceId(),
-                    io.opentelemetry.api.trace.Span.current().getSpanContext().getSpanId());
+            log.info("Creating order - Trace I");
 
             BigDecimal TotalPrice = product.getPrice().multiply(BigDecimal.valueOf(item.getQuantity()));
             totalAmount = totalAmount.add(TotalPrice);
